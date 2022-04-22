@@ -8,8 +8,6 @@
 import SwiftUI
 
 struct SceneView: View {
-    @State var dropState1:Bool = false
-    @State var dropState2:Bool = false
     var body: some View {
         //NavigationView {
         HStack {
@@ -85,6 +83,123 @@ struct SceneView: View {
             //.navigationViewStyle(StackNavigationViewStyle())
     }
 }
+
+struct Scene1:View {
+    @State var dropState1:Bool = false
+    @State var dropState2:Bool = false
+    var body: some View {
+        ScrollView {
+            VStack {
+                Text("Jellyfish DNA")
+                    .font(.largeTitle)
+                    .frame(alignment: .leading)
+                ZStack {
+                    RoundedRectangle(cornerRadius: 20)
+                        .frame(width:700, height: 600)
+                        .foregroundColor(Color.white)
+                        .shadow(radius: 6)
+                    ZStack {
+                        Circle()
+                            .stroke(Color.gray, style: StrokeStyle(lineWidth: 10, lineCap: .butt))
+                            .frame(width: 400, height: 400)
+                        Circle()
+                            .trim(from: 0.6, to: 0.9)
+                            .stroke(Color.green, style: StrokeStyle(lineWidth: 12, lineCap: .butt))
+                            .frame(width: 400, height: 400)
+                        DroppableArea(dropState: $dropState1, point1: 0.56, point2: 0.58, color: Color.black, enz: "r1")
+                        DroppableArea(dropState: $dropState2, point1: 0.92, point2: 0.94, color: Color.blue, enz: "r2")
+                    }
+                }
+                Text("Let's pretend that the above circle is the DNA of a jellyfish. The green ring that you see inside the circle is the gene for GFP. Now, let's try to take this gene out of the DNA of the jellyfish by cutting it.")
+                    .multilineTextAlignment(.center)
+                Text("Scientists use special proteins called restriction enzymes to cut DNA. Try dragging these restriction enzymes onto the marked locations on the gene now!")
+                    .multilineTextAlignment(.center)
+                HStack {
+                    Enzyme(id: "r1", color: Color.black)
+                    Enzyme(id: "r2", color: Color.blue)
+                }
+                
+            }
+        }
+    }
+}
+
+struct Scene2:View {
+    var body: some View {
+        ScrollView {
+            VStack {
+                Text("Jellyfish DNA")
+                    .font(.largeTitle)
+                    .frame(alignment: .leading)
+                ZStack {
+                    RoundedRectangle(cornerRadius: 20)
+                        .frame(width:700, height: 600)
+                        .foregroundColor(Color.white)
+                        .shadow(radius: 6)
+                    ZStack {
+                        Circle()
+                            .stroke(Color.gray, style: StrokeStyle(lineWidth: 10, lineCap: .butt))
+                            .frame(width: 400, height: 400)
+                        Circle()
+                            .trim(from: 0.6, to: 0.9)
+                            .stroke(Color.green, style: StrokeStyle(lineWidth: 12, lineCap: .butt))
+                            .frame(width: 400, height: 400)
+                        DroppableArea(dropState: $dropState1, point1: 0.56, point2: 0.58, color: Color.black, enz: "r1")
+                        DroppableArea(dropState: $dropState2, point1: 0.92, point2: 0.94, color: Color.blue, enz: "r2")
+                    }
+                }
+                Text("Let's pretend that the above circle is the DNA of a jellyfish. The green ring that you see inside the circle is the gene for GFP. Now, let's try to take this gene out of the DNA of the jellyfish by cutting it.")
+                    .multilineTextAlignment(.center)
+                Text("Scientists use special proteins called restriction enzymes to cut DNA. Try dragging these restriction enzymes onto the marked locations on the gene now!")
+                    .multilineTextAlignment(.center)
+                HStack {
+                    Enzyme(id: "r1", color: Color.black)
+                    Enzyme(id: "r2", color: Color.blue)
+                }
+                
+            }
+        }
+    }
+}
+
+struct Scene3:View {
+    var body: some View {
+        ScrollView {
+            VStack {
+                Text("Jellyfish DNA")
+                    .font(.largeTitle)
+                    .frame(alignment: .leading)
+                ZStack {
+                    RoundedRectangle(cornerRadius: 20)
+                        .frame(width:700, height: 600)
+                        .foregroundColor(Color.white)
+                        .shadow(radius: 6)
+                    ZStack {
+                        Circle()
+                            .stroke(Color.gray, style: StrokeStyle(lineWidth: 10, lineCap: .butt))
+                            .frame(width: 400, height: 400)
+                        Circle()
+                            .trim(from: 0.6, to: 0.9)
+                            .stroke(Color.green, style: StrokeStyle(lineWidth: 12, lineCap: .butt))
+                            .frame(width: 400, height: 400)
+                        DroppableArea(dropState: $dropState1, point1: 0.56, point2: 0.58, color: Color.black, enz: "r1")
+                        DroppableArea(dropState: $dropState2, point1: 0.92, point2: 0.94, color: Color.blue, enz: "r2")
+                    }
+                }
+                Text("Let's pretend that the above circle is the DNA of a jellyfish. The green ring that you see inside the circle is the gene for GFP. Now, let's try to take this gene out of the DNA of the jellyfish by cutting it.")
+                    .multilineTextAlignment(.center)
+                Text("Scientists use special proteins called restriction enzymes to cut DNA. Try dragging these restriction enzymes onto the marked locations on the gene now!")
+                    .multilineTextAlignment(.center)
+                HStack {
+                    Enzyme(id: "r1", color: Color.black)
+                    Enzyme(id: "r2", color: Color.blue)
+                }
+                
+            }
+        }
+    }
+}
+
 
 struct Enzyme: View {
     let id: String

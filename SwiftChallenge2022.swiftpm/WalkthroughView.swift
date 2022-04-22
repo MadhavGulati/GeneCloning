@@ -16,6 +16,7 @@ struct WalkthroughView: View {
     @State private var hideButton: Bool = false
     @State private var hideNav: Bool = true
     @State private var opacNav: Double = 1
+    @Binding var onboardingBool:Bool
     var text = [["Have you ever been to a pet store and seen a glowing fish such as this one?", "These fish cannot glow naturally. So how do they become like this?"], ["Some of these fish are changed through genetic modification, in which their physical traits are changed.", "The glowing ability of a fish actually comes from a a special protein called Green Fluorescent Protein, or GFP, in jellyfish."], ["Scientists have been able to transfer this GFP protein to other organisms. This process is called gene cloning.", "Click below to see how this process works!"]]
     var body: some View {
         VStack {
@@ -57,7 +58,9 @@ struct WalkthroughView: View {
                 .opacity(opacButton)
                 .animation(Animation.easeInOut(duration: 0.7))
             }).isHidden(hideButton)
-            NavigationLink(destination: SceneView(), label: {
+            Button {
+                onboardingBool=false
+            } label: {
                 ZStack{
                     Circle()
                         .foregroundColor(Color.purple)
@@ -67,7 +70,7 @@ struct WalkthroughView: View {
                         .foregroundColor(Color.black)
                     
                 }
-            }).isHidden(hideNav)
+            }.isHidden(hideNav)
                 .animation(Animation.easeInOut(duration: 0.7))
                 .opacity(opacNav)
         }

@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct Onboarding: View {
+    @Binding var onboardingBool:Bool
     var body: some View {
         NavigationView {
             VStack {
@@ -29,7 +30,7 @@ struct Onboarding: View {
                         Spacer()
                     }
                 }
-                NavigationLink(destination: WalkthroughView()) {
+                NavigationLink(destination: WalkthroughView(onboardingBool: $onboardingBool)) {
                     ZStack {
                         RoundedRectangle(cornerRadius: 10)
                             .fill(Color(red: 255/255, green: 177/255, blue: 26/255))

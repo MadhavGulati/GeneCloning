@@ -1,10 +1,10 @@
 import SwiftUI
 
 struct ContentView: View {
-    var onboardingBool:Bool = true
+    @State var onboardingBool:Bool = true
     var body: some View {
         if onboardingBool {
-            Onboarding()
+            Onboarding(onboardingBool: $onboardingBool)
         }
         else {
             SceneView()

@@ -8,13 +8,13 @@ import PackageDescription
 import AppleProductTypes
 
 let package = Package(
-    name: "SwiftChallenge2022",
+    name: "GeneCloning",
     platforms: [
         .iOS("15.2")
     ],
     products: [
         .iOSApplication(
-            name: "SwiftChallenge2022",
+            name: "GeneCloning",
             targets: ["AppModule"],
             bundleIdentifier: "MadhavGulati.SwiftChallenge2022",
             teamIdentifier: "6DU75W3VAH",

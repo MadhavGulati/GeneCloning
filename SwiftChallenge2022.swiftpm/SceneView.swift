@@ -11,10 +11,12 @@ enum ActiveScene {
     case scene1
     case scene2
     case scene3
+    case scene4
 }
 
 struct SceneView: View {
     @State var selected:ActiveScene = .scene1
+    @Binding var onboardingBool:Bool
     var body: some View {
         GeometryReader { geo in
             //NavigationView {
@@ -35,14 +37,33 @@ struct SceneView: View {
                         RoundRect(scene: .scene1, text: "Gene From jellyfish", selected: $selected)
                         RoundRect(scene: .scene2, text: "Cutting out the gene", selected: $selected)
                         RoundRect(scene: .scene3, text: "Insert gene into fish", selected: $selected)
+                        RoundRect(scene: .scene3, text: "See your fish!", selected: $selected)
                         Spacer()
+                        ZStack {
+                            Button {
+                                onboardingBool = true
+                            } label: {
+                                RoundedRectangle(cornerRadius: 10)
+                                    .fill(Color(red: 0.98, green: 0.98, blue: 0.98))
+                                    .frame(width: 258, height: 56)
+                                    .shadow(color:Color(red: 0, green: 0, blue: 0, opacity: 0.10), radius: 4)
+                                    .padding([.top])
+                                Text("↻")
+                                    .padding(.top)
+                                    .font(.title3)
+                                    .multilineTextAlignment(.center)
+                                    .frame(width: 258, height: 56)
+                            }
+                            .buttonStyle(PlainButtonStyle())
+                        }
+                        .padding(.bottom)
                     }
                 }
                 .frame(width: geo.size.width * 0.3)
                 Group {
                     if (selected == .scene1) {Scene1(selected: $selected)}
                     else if (selected == .scene2) {Scene2(selected: $selected)}
-                    else if (selected == .scene3) {Scene3()}
+                    else if (selected == .scene3) {Scene3(selected: $selected)}
                 }.frame(width: geo.size.width * 0.7)
                 
             }
@@ -153,7 +174,6 @@ struct Scene2:View {
                 }
                 Text(textLbl)
                     .padding()
-                    .padding()
                     .multilineTextAlignment(.center)
                 Button {
                     if pressCounter == 1 {
@@ -205,6 +225,12 @@ struct Scene2:View {
 }
 
 struct Scene3:View {
+    @State var dropState1:Bool = false
+    @State var dropState2:Bool = false
+    @State var dropState3:Bool = false
+    @State private var nextVar:Bool = false
+    @State private var textStr:String = "Great! We now have our GFP gene from the jellyfish. Now, above we have the DNA of our fish. Let's use the same restriction enzymes from before to make cuts in the fish DNA. This will give us a gap to put the GFP gene into the fish's DNA."
+    @Binding var selected:ActiveScene
     var body: some View {
         ScrollView {
             VStack {
@@ -220,19 +246,98 @@ struct Scene3:View {
                         Circle()
                             .stroke(Color.gray, style: StrokeStyle(lineWidth: 10, lineCap: .butt))
                             .frame(width: 400, height: 400)
-                        //DroppableArea(dropState: $dropState1, point1: 0.55, point2: 0.58, color: Color.black, enz: "r1")
-                        //DroppableArea(dropState: $dropState2, point1: 0.92, point2: 0.95, color: Color.blue, enz: "r2")
+                        Circle()
+                            .trim(from: 0.59, to: 0.91)
+                            .stroke(Color.white, style: StrokeStyle(lineWidth: 12, lineCap: .butt))
+                            .frame(width: 400, height: 400)
+                            .isHidden(!nextVar)
+                        DroppableArea(dropState: $dropState1, point1: 0.55, point2: 0.58, color: Color.black, enz: "r3")
+                            .isHidden(nextVar)
+                        DroppableArea(dropState: $dropState2, point1: 0.92, point2: 0.95, color: Color.blue, enz: "r4")
+                            .isHidden(nextVar)
+                        DroppableArea(dropState: $dropState3, point1: 0.6, point2: 0.9, color: Color.green, enz: "gfp")
+                            .isHidden(!nextVar)
                     }
                 }
-                Text("Great! We now have our GFP gene from the jellyfish. Now, above we have the DNA of our fish. Let's use the same restriction enzymes from before to make cuts in the fish DNA. This will give us a gap to put the GFP gene into the fish's DNA.")
+                Text(textStr)
                     .padding()
                     .multilineTextAlignment(.center)
                 HStack {
-                    Enzyme(id: "r1", color: Color.black)
-                    Enzyme(id: "r2", color: Color.blue)
+                    Enzyme(id: "r3", color: Color.black)
+                        .isHidden(nextVar)
+                    Enzyme(id: "r4", color: Color.blue)
+                        .isHidden(nextVar)
+                    Circle()
+                        .trim(from: 0.6, to: 0.9)
+                        .stroke(Color.green, style: StrokeStyle(lineWidth: 12, lineCap: .butt))
+                        .frame(width: 400, height: 400)
+                        .onDrag {
+                            return NSItemProvider(object: "gfp" as NSString)
+                        }
+                        .isHidden(!nextVar)
+                    
                 }
                 
             }
+            Circle()
+                .fill(Color.blue)
+                .frame(width: 12, height: 12)
+                .modifier(ParticlesModifier())
+                .offset(x: -100, y : -50)
+            
+            Circle()
+                .fill(Color.red)
+                .frame(width: 12, height: 12)
+                .modifier(ParticlesModifier())
+                .offset(x: 60, y : 70)
+        }
+        .onChange(of: (dropState1 && dropState2)) { _ in
+            if (dropState1 && dropState2) {
+                nextVar = true
+                textStr = "Awesome! Now insert the GFP gene into the fish DNA by dragging and dropping."
+            }
+        }
+        .onChange(of: dropState3) { _ in
+            if dropState3 {
+                selected = .scene4
+            }
+        }
+    }
+}
+
+struct Scene4:View {
+    @Binding var selected:ActiveScene
+    var body: some View {
+        ScrollView {
+            VStack {
+                Text("See your fish!")
+                    .font(.largeTitle)
+                    .frame(alignment: .leading)
+                ZStack {
+                    RoundedRectangle(cornerRadius: 20)
+                        .frame(width:600, height: 500)
+                        .foregroundColor(Color.white)
+                        .shadow(radius: 6)
+                    ZStack {
+                        Image("fishtank")
+                    }
+                }
+                Text("Congratulations!")
+                    .padding()
+                    .multilineTextAlignment(.center)
+                
+            }
+            Circle()
+                .fill(Color.blue)
+                .frame(width: 12, height: 12)
+                .modifier(ParticlesModifier())
+                .offset(x: -100, y : -50)
+            
+            Circle()
+                .fill(Color.red)
+                .frame(width: 12, height: 12)
+                .modifier(ParticlesModifier())
+                .offset(x: 60, y : 70)
         }
     }
 }
@@ -242,9 +347,9 @@ struct Enzyme: View {
     let id: String
     let color:Color
     var body: some View {
-        Rectangle()
+        RoundedRectangle(cornerRadius: 5)
             .foregroundColor(color)
-            .frame(width:30, height: 30)
+            .frame(width:50, height: 50)
             .onDrag {
                 return NSItemProvider(object: self.id as NSString)
             }
@@ -320,5 +425,47 @@ struct RoundRect: View {
             }
         }
         .buttonStyle(PlainButtonStyle())
+    }
+}
+
+
+struct FireworkParticlesGeometryEffect : GeometryEffect {
+    var time : Double
+    var speed = Double.random(in: 20 ... 200)
+    var direction = Double.random(in: -Double.pi ...  Double.pi)
+    
+    var animatableData: Double {
+        get { time }
+        set { time = newValue }
+    }
+    func effectValue(size: CGSize) -> ProjectionTransform {
+        let xTranslation = speed * cos(direction) * time
+        let yTranslation = speed * sin(direction) * time
+        let affineTranslation =  CGAffineTransform(translationX: xTranslation, y: yTranslation)
+        return ProjectionTransform(affineTranslation)
+    }
+}
+
+struct ParticlesModifier: ViewModifier {
+    @State var time = 0.0
+    @State var scale = 0.1
+    let duration = 5.0
+    
+    func body(content: Content) -> some View {
+        ZStack {
+            ForEach(0..<80, id: \.self) { index in
+                content
+                    .hueRotation(Angle(degrees: time * 80))
+                    .scaleEffect(scale)
+                    .modifier(FireworkParticlesGeometryEffect(time: time))
+                    .opacity(((duration-time) / duration))
+            }
+        }
+        .onAppear {
+            withAnimation (.easeOut(duration: duration)) {
+                self.time = duration
+                self.scale = 1.0
+            }
+        }
     }
 }

@@ -5,10 +5,9 @@ struct ContentView: View {
     var body: some View {
         if onboardingBool {
             Onboarding(onboardingBool: $onboardingBool).preferredColorScheme(.light)
-            //SceneView().preferredColorScheme(.light)
         }
         else {
-            SceneView()
+            SceneView(onboardingBool: $onboardingBool)
                 .preferredColorScheme(.light)
         }
     }

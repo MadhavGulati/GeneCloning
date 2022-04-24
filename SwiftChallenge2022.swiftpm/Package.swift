@@ -27,17 +27,31 @@ let package = Package(
                 .phone
             ],
             supportedInterfaceOrientations: [
-                .portrait,
                 .landscapeRight,
-                .landscapeLeft,
-                .portraitUpsideDown(.when(deviceFamilies: [.pad]))
+                .landscapeLeft
+            ],
+            capabilities: [
+                .camera(purposeString: "Allow your camera in order to use AR to view your fish in real life!")
             ]
         )
+    ],
+    dependencies: [
+        .package(url: "https://github.com/joogps/IrregularGradient", "1.0.0"..<"2.0.0")
     ],
     targets: [
         .executableTarget(
             name: "AppModule",
-            path: "."
+            dependencies: [
+                .product(name: "IrregularGradient", package: "irregulargradient")
+            ],
+            path: ".",
+            resources: [
+                .process("Resources/pop.mp3"),
+                .process("Resources/start.mp3"),
+                .process("Resources/intro.mp3"),
+                .process("Resources/ship.scn"),
+                .process("Resources/texture.png")
+            ]
         )
     ]
 )

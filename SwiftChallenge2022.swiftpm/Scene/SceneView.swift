@@ -36,7 +36,7 @@ struct SceneView: View {
                             .padding(.top)
                             .padding(.top)
                             .padding(.top)
-                        RoundRect(scene: .scene1, text: "Gene From jellyfish", selected: $selected)
+                        RoundRect(scene: .scene1, text: "Jellyfish DNA", selected: $selected)
                         RoundRect(scene: .scene2, text: "Cutting out the gene", selected: $selected)
                         RoundRect(scene: .scene3, text: "Insert gene into fish", selected: $selected)
                         RoundRect(scene: .scene4, text: "See your fish!", selected: $selected)
@@ -44,9 +44,11 @@ struct SceneView: View {
                         ZStack {
                             Button {
                                 onboardingBool = true
-                                NotificationCenter.default.post(name: Notification.ReturnBack,object: nil)
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: {
+                                    NotificationCenter.default.post(name: Notification.ReturnBack,object: nil)
+                                })
                             } label: {
-                                Text("Restart ↻")
+                                Text("Back ↻")
                                     .font(.title3)
                                     .frame(width: 258, height: 56)
                                     .background(

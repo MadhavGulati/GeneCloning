@@ -35,22 +35,16 @@ let package = Package(
             ]
         )
     ],
-    dependencies: [
-        .package(url: "https://github.com/joogps/IrregularGradient", "1.0.0"..<"2.0.0")
-    ],
     targets: [
         .executableTarget(
             name: "AppModule",
-            dependencies: [
-                .product(name: "IrregularGradient", package: "irregulargradient")
-            ],
             path: ".",
             resources: [
                 .process("Resources/pop.mp3"),
                 .process("Resources/start.mp3"),
                 .process("Resources/intro.mp3"),
-                .process("Resources/ship.scn"),
-                .process("Resources/texture.png")
+                .process("Resources/end.mp3"),
+                .process("Resources/fish.usdz"),
             ]
         )
     ]

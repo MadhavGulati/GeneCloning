@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import IrregularGradient
 import AVFoundation
 
 struct Onboarding: View {
@@ -23,6 +22,7 @@ struct Onboarding: View {
                             .aspectRatio(contentMode: .fit)
                             .frame(width: geo.size.width * 0.4)
                             .padding()
+                            .padding(.leading, 75)
                         VStack {
                             Spacer()
                             Text("Gene Cloning")
@@ -37,7 +37,7 @@ struct Onboarding: View {
                             Spacer()
                         }
                     }
-                    NavigationLink(destination: WalkthroughView(onboardingBool: $onboardingBool).navigationBarBackButtonHidden(true)) {
+                    NavigationLink(destination: WalkthroughView(onboardingBool: $onboardingBool)) {
                         ZStack {
                             RoundedRectangle(cornerRadius: 10)
                                 .fill(Color(red: 255/255, green: 177/255, blue: 26/255))

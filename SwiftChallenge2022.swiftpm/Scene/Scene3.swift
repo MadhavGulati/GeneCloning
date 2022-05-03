@@ -13,7 +13,7 @@ struct Scene3:View {
     @State var dropState2:Bool = false
     @State var dropState3:Bool = false
     @State private var nextVar:Bool = false
-    @State private var textStr:String = "Great! We now have our GFP gene from the jellyfish. Now, above we have the DNA of our fish. Let's use the same restriction enzymes from before to make cuts in the fish DNA. This will give us a gap to put the GFP gene into the fish's DNA."
+    @State private var textStr:String = "Great! Now that we have our GFP gene from the jellyfish, it's time to prepare our fish DNA to receive this new gene. Let's use the same restriction enzymes from before to make cuts in the fish DNA. This will give us a gap to introduced the GFP gene into the fish's DNA. Go ahead, you know what to do.."
     @Binding var selected:ActiveScene
     @State var player:AVAudioPlayer? = nil
     var body: some View {
@@ -46,6 +46,7 @@ struct Scene3:View {
                 }
                 Text(textStr)
                     .padding()
+                    .padding()
                     .multilineTextAlignment(.center)
                 HStack {
                     if (!nextVar) {
@@ -69,22 +70,10 @@ struct Scene3:View {
             }
         }
         .onChange(of: (dropState1)) { _ in
-            let url = Bundle.main.url(forResource: "pop", withExtension: "mp3")
-            player = try! AVAudioPlayer(contentsOf: url!)
-            player!.play()
-            if (dropState1 && dropState2) {
-                nextVar = true
-                textStr = "Awesome! Now insert the GFP gene into the fish DNA by dragging and dropping."
-            }
+            dropStateChanged()
         }
         .onChange(of: (dropState2)) { _ in
-            let url = Bundle.main.url(forResource: "pop", withExtension:"mp3")
-            player = try! AVAudioPlayer(contentsOf: url!)
-            player!.play()
-            if (dropState1 && dropState2) {
-                nextVar = true
-                textStr = "Awesome! Now insert the GFP gene into the fish DNA by dragging and dropping."
-            }
+            dropStateChanged()
         }
         .onChange(of: dropState3) { _ in
             let url = Bundle.main.url(forResource: "pop", withExtension:"mp3")
@@ -95,6 +84,15 @@ struct Scene3:View {
                     selected = .scene4
                 }
             })
+        }
+    }
+    func dropStateChanged() {
+        let url = Bundle.main.url(forResource: "pop", withExtension:"mp3")
+        player = try! AVAudioPlayer(contentsOf: url!)
+        player!.play()
+        if (dropState1 && dropState2) {
+            nextVar = true
+            textStr = "Awesome! Now it's time to insert the GFP gene into the fish DNA. Drag and drop the GFP segment below in the indicated area above."
         }
     }
 }

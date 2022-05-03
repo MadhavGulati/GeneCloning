@@ -12,7 +12,7 @@ struct Scene1:View {
     @State var dropState1:Bool = false
     @State var dropState2:Bool = false
     @Binding var selected:ActiveScene
-    @State private var textStr:String = "Let's pretend that the above circle is the DNA of a jellyfish. The green segment of the circle that you see above is the gene for GFP. Now, let's take this gene out of the DNA of the jellyfish by cutting it."
+    @State private var textStr:String = "Let's pretend that the above circle is the DNA of a jellyfish, and the green segment of the circle is the gene for GFP. Now, let's extract this gene out of the jellyfish by cutting it."
     @State private var nextBtnShow:Bool = true
     @State private var pressCounter:Int = 0
     @State private var showVar:Bool = false
@@ -61,7 +61,7 @@ struct Scene1:View {
                             nextBtnShow = false
                         }
                         withAnimation(.easeInOut(duration: 1.0), {
-                            textStr = "Scientists use special proteins called restriction enzymes to cut DNA. Try dragging these restriction enzymes onto the marked locations on the gene now! (Press and hold, and then drag.)"
+                            textStr = "Scientists use special proteins called restriction enzymes to cut DNA. Try dragging these restriction enzymes onto the marked locations on the DNA now! (Press and hold to start dragging, then drop when you see the + sign.)"
                             showVar = true
                             pressCounter += 1
                         })
@@ -85,24 +85,20 @@ struct Scene1:View {
             }
         }
         .onChange(of: dropState1) { _ in
-            let url = Bundle.main.url(forResource: "pop", withExtension:"mp3")
-            player = try! AVAudioPlayer(contentsOf: url!)
-            player!.play()
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: {
-                if (dropState1 && dropState2) {
-                    selected = .scene2
-                }
-            })
+            dropStateChanged()
         }
         .onChange(of: dropState2) { _ in
-            let url = Bundle.main.url(forResource: "pop", withExtension:"mp3")
-            player = try! AVAudioPlayer(contentsOf: url!)
-            player!.play()
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: {
-                if (dropState1 && dropState2) {
-                    selected = .scene2
-                }
-            })
+            dropStateChanged()
         }
+    }
+    func dropStateChanged() {
+        let url = Bundle.main.url(forResource: "pop", withExtension:"mp3")
+        player = try! AVAudioPlayer(contentsOf: url!)
+        player!.play()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: {
+            if (dropState1 && dropState2) {
+                selected = .scene2
+            }
+        })
     }
 }

@@ -4,12 +4,10 @@ struct ContentView: View {
     @State var onboardingBool:Bool = true
     var body: some View {
         if onboardingBool {
-            Onboarding(onboardingBool: $onboardingBool)
-                .preferredColorScheme(.light)
+            Onboarding(onboardingBool: $onboardingBool).preferredColorScheme(.light)
         }
         else {
-            SceneView(onboardingBool: $onboardingBool)
-                .preferredColorScheme(.light)
+            SceneView(onboardingBool: $onboardingBool).preferredColorScheme(.light)
         }
     }
 }

@@ -37,25 +37,24 @@ struct Scene4:View {
                             .ignoresSafeArea()
                     }
                 }
-                Text("Congratulations! You have successfully cloned a GFP gene from a jellyfish to a fish!")
+                Circle()
+                    .fill(Color.blue)
+                    .frame(width: 12, height: 12)
+                    .modifier(ParticlesModifier())
+                    .offset(x: -100, y : -50)
+                
+                Circle()
+                    .fill(Color.red)
+                    .frame(width: 12, height: 12)
+                    .modifier(ParticlesModifier())
+                    .offset(x: 60, y : 70)
+                Text("Hooray! You have successfully cloned a GFP gene from a jellyfish to a fish! Obviously it's more complicated than this, but I hope you get the general idea. Scroll down for a surprise and move your camera around!")
                     .padding()
                     .multilineTextAlignment(.center)
                 ARView().frame(width: 500, height: 500)
-            }
-            Circle()
-                .fill(Color.blue)
-                .frame(width: 12, height: 12)
-                .modifier(ParticlesModifier())
-                .offset(x: -100, y : -50)
-            
-            Circle()
-                .fill(Color.red)
-                .frame(width: 12, height: 12)
-                .modifier(ParticlesModifier())
-                .offset(x: 60, y : 70)
-        }
+            }        }
         .onAppear {
-            let url = Bundle.main.url(forResource: "pop", withExtension:"mp3")
+            let url = Bundle.main.url(forResource: "end", withExtension:"mp3")
             player = try! AVAudioPlayer(contentsOf: url!)
             player!.play()
         }
@@ -65,13 +64,18 @@ struct Scene4:View {
 struct ARView:UIViewRepresentable {
     func makeUIView(context: Context) -> some UIView {
         let sceneView = ARSCNView()
-        sceneView.showsStatistics = true
         
-        let paths = Bundle.main.paths(forResourcesOfType: "scn", inDirectory: nil)
-        print(paths)
+        guard let url = Bundle.main.url(forResource: "fish", withExtension: "usdz") else { fatalError() }
         
-        let scene = SCNScene(named: "ship.scn")!
+        let scene = try! SCNScene(url: url, options: [.checkConsistency: true])
         sceneView.scene = scene
+        
+        let spotLight = SCNNode()
+        spotLight.light = SCNLight()
+        spotLight.light?.type = .directional
+        
+        sceneView.scene.rootNode.addChildNode(spotLight)
+        
         
         let configuration = ARWorldTrackingConfiguration()
         sceneView.session.run(configuration)

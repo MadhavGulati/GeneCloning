@@ -13,7 +13,6 @@ let tank = SKSpriteNode(imageNamed: "tank")
 
 class GameScene: SKScene {
     override func didMove(to view: SKView) {
-        print("You are in the game scene!")
         backgroundColor = SKColor.white
         tank.position = CGPoint(x: self.frame.width/2, y: self.frame.height/2)
         fish1.position = CGPoint(x: self.frame.width/2, y: self.frame.height/2)

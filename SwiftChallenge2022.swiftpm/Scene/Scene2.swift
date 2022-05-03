@@ -9,7 +9,7 @@ import SwiftUI
 
 struct Scene2:View {
     @State private var nextVar:Bool = false
-    @State private var textLbl:String = "Awesome!! You have now cut out a gene from the fish DNA. Let's take a closer look at these cuts."
+    @State private var textLbl:String = "Awesome! You have now cut the gene from the jellyfish DNA. Let's take a closer look at these cuts."
     @State private var pressCounter:Int = 0
     @State private var nextBtnShow:Bool = true
     @Binding var selected:ActiveScene
@@ -53,6 +53,7 @@ struct Scene2:View {
                 }
                 Text(textLbl)
                     .padding()
+                    .padding()
                     .multilineTextAlignment(.center)
                 Button {
                     if pressCounter == 1 {
@@ -64,7 +65,7 @@ struct Scene2:View {
                         nextBtnShow = false
                         nextVar = true
                         withAnimation(.easeInOut(duration: 0.5), {
-                            textLbl = "DNA is double stranded, which means it is made up of 2 'strands' that are joined together. Some restriction enzymes, such as the ones you just used, cut so that one strand of DNA is longer than the other. This leaves an overhang, called a 'sticky end'. These sticky ends help genes with matching sticky ends to join easily."
+                            textLbl = "DNA is double stranded (made up of 2 'strands' joined together). Some restriction enzymes, like the ones you just used, cut so that one strand of the DNA is longer than the other. This leaves an overhang, called a 'sticky end', which allow genes with matching sticky ends to join easily."
                         })
                         
                         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {

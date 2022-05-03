@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import IrregularGradient
 import AVFoundation
 
 struct WalkthroughView: View {
@@ -14,7 +13,7 @@ struct WalkthroughView: View {
     @State private var hideButton: Bool = false
     @State private var hideNav: Bool = true
     @Binding var onboardingBool:Bool
-    var text = [["Have you ever been to a pet store and seen a fish glow, such as this one?", "Some species of fish are able to glow naturally, but others are modified by scientists to be able to glow. So how do they become like this?"], ["These fish are changed through **genetic modification**, in which their physical traits are changed.", "The glowing ability of a fish actually comes from a special protein called **Green Fluorescent Protein**, or **GFP**, which is found in jellyfish."], ["Scientists have been able to transfer this GFP protein to other organisms like this fish. This process is called **gene cloning**.", "Want to see how this process works? Click the button below!"]]
+    var text = [["Have you ever been to a pet store and seen fish that glow, like the ones in this fish tank?", "Some species of fish are able to glow naturally, but others are a miracle of science where scientists have created these fish that have this quality to glow. So how do they do this?"], ["These fish are changed through **genetic modification**, in which their physical traits are changed.", "The glowing ability of a fish actually comes from a special protein called **Green Fluorescent Protein**, or **GFP**, which is found in jellyfish."], ["Scientists have managed to transfer this GFP protein to other organisms like this fish. This process is called **gene cloning**.", "Want to see how this process works? Click the button below!"]]
     var imagePaths = ["fishtank", "jellyfish", "fishtank"]
     @State var player:AVAudioPlayer? = nil
     var body: some View {
@@ -51,7 +50,7 @@ struct WalkthroughView: View {
                                     txtI+=1
                                     hideButton = true
                                 }
-                                DispatchQueue.main.asyncAfter(deadline: .now() + 2.0, execute: {
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 1.0, execute: {
                                     withAnimation {hideButton = false}
                                 })
                             }

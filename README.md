@@ -7,7 +7,7 @@ My WWDC 2022 Swift Student Challenge student submission, demonstrating how gene 
 ## Video
 Check out the trailer video [here](https://youtu.be/j0WaM1uHiiQ)
 
-![Home Screen](/ignore/mockups%202/homescreen.png)
+![Home Screen](/images/homescreen.png)
 
 
 Genetic modification is a concept that is all around us in our daily worlds, but most people don't realize it. Gene Cloning is an interactive app that demonstrates how gene cloning works, by making a fish glow! This app was built with *SwiftUI* as well as *AVFoundation*, *SpriteKit*, *ARKit*, and other frameworks to deliver this interactive experience.
@@ -31,4 +31,4 @@ Download the .swiftpm file above to your iOS device and run it through the iOS S
 - **3D Fish**: A [model of a fish created by 3DGuru](https://usdzshare.com/?ug-gallery=photo-detail&photo_id=5148) on usdzshare.com, used for the Augmented Reality end screen.
 
 
-![Main scene - drag and drop](/ignore/mockups%202/dragdrop.png)
+![Main scene - drag and drop](/images/dragdrop.png)
